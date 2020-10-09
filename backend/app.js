@@ -1,8 +1,12 @@
+import fs from "fs";
+import path from "path";
+
 const getNewId = (arr) => (arr.length ? arr.slice(-1)[0].id + 1 : 1);
 
 class MessageApp {
-	constructor() {
-		this.messages = [];
+	constructor(filePath) {
+		this.filePath = filePath;
+		this.messages = filePath ? this.readFromJson() : [];
 	}
 
 	post(content) {
@@ -29,6 +33,18 @@ class MessageApp {
 	delete(id) {
 		this.messages = this.messages.filter((el) => el.id !== id);
 		return this.messages;
+	}
+
+	readFromJson() {
+		return JSON.parse(
+			fs.readFileSync(
+				__dirname + path.normalize(this.filePath),
+				"utf8",
+				(err, data) => {
+					if (err) throw err;
+				}
+			)
+		);
 	}
 }
 
