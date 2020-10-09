@@ -41,6 +41,31 @@ describe("app", () => {
 			testApp.delete(1);
 			expect(testApp.messages.length).to.equal(0);
 		});
+
+		it("getAll returns all messages", () => {
+			expect(testApp.getAll()).to.be.an("array");
+			expect(testApp.getAll().length).to.equal(1);
+		});
+	});
+
+	describe("error handling", () => {
+		it("rejects empty messages", () => {
+			expect(testApp.post("")).to.deep.equal([]);
+		});
+
+		it("no messages if no messages are sent", () => {
+			expect(testApp.getAll()).to.deep.equal([]);
+		});
+
+		it("rejects false update", () => {
+			expect(testApp.update(0, "")).to.deep.equal([]);
+		});
+
+		it("errors if no message to delete", () => {
+			expect(testApp.delete(0)).to.deep.equal(
+				"Message not found in database"
+			);
+		});
 	});
 
 	it("id's are always unique", () => {

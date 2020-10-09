@@ -10,6 +10,7 @@ class MessageApp {
 	}
 
 	post(content) {
+		if (!content) return [];
 		this.messages.push({
 			id: getNewId(this.messages),
 			content,
@@ -23,17 +24,24 @@ class MessageApp {
 		return this.messages.find((el) => el.id === id);
 	}
 
+	getAll() {
+		return this.messages;
+	}
+
 	update(id, content) {
-		let newEl;
-		this.messages = this.messages.map((el) =>
-			el.id === id ? (newEl = { ...el, content }) : el
-		);
+		const idx = this.messages.findIndex((el) => el.id === id);
+		if (idx === -1) return [];
+
+		this.messages[idx].content = content;
 		this.writeToJSON();
-		return newEl;
+		return this.messages[idx];
 	}
 
 	delete(id) {
-		this.messages = this.messages.filter((el) => el.id !== id);
+		const idx = this.messages.findIndex((el) => el.id === id);
+		if (idx === -1) return "Message not found in database";
+
+		this.messages.splice(idx, 1);
 		this.writeToJSON();
 		return this.messages;
 	}
