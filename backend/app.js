@@ -1,3 +1,5 @@
+const getNewId = (arr) => (arr.length ? arr.slice(-1)[0].id + 1 : 1);
+
 class MessageApp {
 	constructor() {
 		this.messages = [];
@@ -5,7 +7,7 @@ class MessageApp {
 
 	post(content) {
 		this.messages.push({
-			id: this.messages.slice(-1)[0] + 1 || 0,
+			id: getNewId(this.messages),
 			content,
 			date: new Date()
 		});
