@@ -15,6 +15,7 @@ class MessageApp {
 			content,
 			date: new Date()
 		});
+		this.writeToJSON();
 		return this.messages;
 	}
 
@@ -27,11 +28,13 @@ class MessageApp {
 		this.messages = this.messages.map((el) =>
 			el.id === id ? (newEl = { ...el, content }) : el
 		);
+		this.writeToJSON();
 		return newEl;
 	}
 
 	delete(id) {
 		this.messages = this.messages.filter((el) => el.id !== id);
+		this.writeToJSON();
 		return this.messages;
 	}
 
@@ -45,6 +48,17 @@ class MessageApp {
 				}
 			)
 		);
+	}
+
+	writeToJSON() {
+		if (this.filePath)
+			fs.writeFileSync(
+				__dirname + path.normalize(this.filePath),
+				JSON.stringify(this.messages),
+				(err) => {
+					if (err) throw err;
+				}
+			);
 	}
 }
 
