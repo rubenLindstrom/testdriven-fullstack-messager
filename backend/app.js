@@ -1,9 +1,12 @@
 import express from "express";
+import MessageApp from "./lib/model";
 
 const app = express();
+let messageApp = new MessageApp("////json///testMessages.json");
 
-app.get("/", (req, res) => {
-	res.send({ val: "Hello world!" });
+app.get("/", async (req, res) => {
+	let result = messageApp.getAll();
+	res.json(result);
 });
 
 const PORT = 3001;
