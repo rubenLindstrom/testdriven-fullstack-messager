@@ -1,13 +1,11 @@
 import express from "express";
-import MessageApp from "./lib/model";
-
+import routes from "./lib/routes";
 const app = express();
-let messageApp = new MessageApp("////json///testMessages.json");
 
-app.get("/", async (req, res) => {
-	let result = messageApp.getAll();
-	res.json(result);
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(routes);
 
 const PORT = 3001;
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
