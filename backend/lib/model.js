@@ -21,7 +21,7 @@ class MessageApp {
 	}
 
 	get(id) {
-		return this.messages.find((el) => el.id === id);
+		return this.messages.find((el) => el.id == id);
 	}
 
 	getAll() {
@@ -29,8 +29,8 @@ class MessageApp {
 	}
 
 	update(id, content) {
-		const idx = this.messages.findIndex((el) => el.id === id);
-		if (idx === -1) return [];
+		const idx = this.messages.findIndex((el) => el.id == id);
+		if (idx == -1) return [];
 
 		this.messages[idx].content = content;
 		this.writeToJSON();
@@ -38,8 +38,8 @@ class MessageApp {
 	}
 
 	delete(id) {
-		const idx = this.messages.findIndex((el) => el.id === id);
-		if (idx === -1) return "Message not found in database";
+		const idx = this.messages.findIndex((el) => el.id == id);
+		if (idx == -1) return "Message not found in database";
 
 		this.messages.splice(idx, 1);
 		this.writeToJSON();
