@@ -1,22 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import MessageForm from './components/messageForm';
+import MessageList from './components/messageList';
 
-function App() {
-  return (
+const App = () => (
     <div className="App">
-      <textarea id="message_box"></textarea>
-      <br />
-      <button
-        type="submit"
-        name="submit"
-        id="submit"
-      >
-        Submit
-      </button>
-      <ul id="message_list"></ul>
+      <MessageForm />
+      <MessageList />
     </div>
   );
-}
 
 export default App;
