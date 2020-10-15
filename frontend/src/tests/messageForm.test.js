@@ -1,9 +1,8 @@
 import React from "react";
 import MessageForm from "../components/messageForm";
 
-import Enzyme from "enzyme";
+import Enzyme, { mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { mount, shallow } from "enzyme";
 
 Enzyme.configure({ adapter: new Adapter() });
 

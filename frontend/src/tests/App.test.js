@@ -2,9 +2,8 @@ import React from "react";
 import MessageApp from "../App";
 
 import mockAxios from "../__mocks__/axios";
-import Enzyme from "enzyme";
+import Enzyme, { mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { mount } from "enzyme";
 
 Enzyme.configure({ adapter: new Adapter() });
 

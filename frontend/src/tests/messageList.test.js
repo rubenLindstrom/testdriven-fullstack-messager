@@ -1,8 +1,7 @@
 import React from "react";
 import MessageList from "../components/messageList";
-import Enzyme from "enzyme";
+import Enzyme, { mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { mount, shallow } from "enzyme";
 
 Enzyme.configure({ adapter: new Adapter() });
 

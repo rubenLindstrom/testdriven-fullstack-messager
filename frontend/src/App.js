@@ -16,12 +16,12 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount = () => this.getAllMessages();
+
   submitMessage = (content) => axios.post(`${URL}/message`, { content });
 
   getAllMessages = () =>
     axios.get(URL).then(({ data }) => this.setState({ messages: data }));
-
-  componentDidMount = () => this.getAllMessages();
 
   render = () => (
     <div className="App">
