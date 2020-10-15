@@ -27,4 +27,25 @@ describe("MessageList", () => {
       component.find("ul#message_list").childAt(0).exists("button.delete")
     ).toBe(true);
   });
+
+  it("has an update button for each message", () => {
+    const component = mount(<MessageList messages={mockMessages} />);
+    expect(
+      component.find("ul#message_list").childAt(0).exists("button.update")
+    ).toBe(true);
+  });
+
+  it("updates button text on click", () => {
+    const component = mount(
+      <MessageList messages={mockMessages} loaded={true} />
+    );
+    component
+      .find("ul#message_list")
+      .childAt(0)
+      .find(".update")
+      .simulate("click");
+    expect(
+      component.find("ul#message_list").childAt(0).find(".send").text()
+    ).toBe("Send Update");
+  });
 });
