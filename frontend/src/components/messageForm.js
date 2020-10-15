@@ -22,7 +22,6 @@ class MessageForm extends React.Component {
     <form onSubmit={this.handleSubmit}>
       <textarea
         value={this.state.currentMessage}
-        test={console.log(this.props)}
         onChange={this.handleMessageValueChange}
         name=""
         id="message_box"

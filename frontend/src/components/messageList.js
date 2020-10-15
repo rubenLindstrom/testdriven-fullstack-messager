@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
 
-const messageList = () => (
+const messageList = ({ messages }) => (
   <ul id="message_list">
-    <li>message</li>
+    {messages ? (
+      messages.map(({ id, content, date }) => (
+        <li className="message" key={id}>
+          {content}
+          <br />
+          {date}
+        </li>
+      ))
+    ) : (
+      <p>No messages</p>
+    )}
   </ul>
-)
+);
 
-export default messageList
+export default messageList;

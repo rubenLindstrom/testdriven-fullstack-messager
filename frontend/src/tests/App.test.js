@@ -40,4 +40,9 @@ describe("App", () => {
 
     expect(childComponent.state("currentMessage")).toEqual("");
   });
+
+  it("loads data from API", () => {
+    mount(<MessageApp />);
+    expect(mockAxios.get).toHaveBeenCalledTimes(1);
+  });
 });
