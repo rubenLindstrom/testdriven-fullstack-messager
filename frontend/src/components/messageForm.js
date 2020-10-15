@@ -1,11 +1,38 @@
-import React from 'react'
+import React from "react";
 
-const messageForm = () => (
-  <form action="" id="message-form">
-    <textarea name="" id="message_box" cols="30" rows="10"></textarea>
-    <br/>
-    <button type="submit" name="submit" id="submit">Submit</button>
-  </form>
-)
+class MessageForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currentMessage: "",
+    };
+  }
 
-export default messageForm
+  handleMessageValueChange = (e) => {
+    this.setState({ currentMessage: e.target.value });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.onSubmit(this.state.currentMessage);
+    this.setState({ currentMessage: "" });
+  };
+
+  render = () => (
+    <form onSubmit={this.handleSubmit}>
+      <textarea
+        value={this.state.currentMessage}
+        test={console.log(this.props)}
+        onChange={this.handleMessageValueChange}
+        name=""
+        id="message_box"
+      ></textarea>
+      <br />
+      <button type="submit" name="submit" id="submit">
+        Submit
+      </button>
+    </form>
+  );
+}
+
+export default MessageForm;
