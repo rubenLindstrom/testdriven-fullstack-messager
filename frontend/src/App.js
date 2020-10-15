@@ -25,7 +25,7 @@ class App extends React.Component {
   submitMessage = (content) =>
     axios
       .post(`${URL}/message`, { content })
-      .then(() => this.getAllMessages())
+      .then(this.getAllMessages)
       .catch((err) => this.setError(err));
 
   getAllMessages = () =>
@@ -37,7 +37,13 @@ class App extends React.Component {
   deleteMessage = (id) =>
     axios
       .delete(`${URL}/delete/${id}`, { id })
-      .then(() => this.getAllMessages())
+      .then(this.getAllMessages)
+      .catch((err) => this.setError(err));
+
+  sendUpdate = (id, content) =>
+    axios
+      .put(`${URL}/update/${id}`, { content })
+      .then(this.getAllMessages)
       .catch((err) => this.setError(err));
 
   render = () => (
@@ -47,6 +53,7 @@ class App extends React.Component {
       <MessageList
         messages={this.state.messages}
         onDelete={this.deleteMessage}
+        onUpdate={this.sendUpdate}
       />
     </div>
   );
