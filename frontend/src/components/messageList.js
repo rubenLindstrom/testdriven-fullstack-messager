@@ -1,6 +1,6 @@
 import React from "react";
 
-const messageList = ({ messages }) => (
+const messageList = ({ messages, onDelete }) => (
   <ul id="message_list">
     {messages ? (
       messages.map(({ id, content, date }) => (
@@ -8,6 +8,10 @@ const messageList = ({ messages }) => (
           {content}
           <br />
           {date}
+          <br />
+          <button className="delete" onClick={() => onDelete(id)}>
+            delete
+          </button>
         </li>
       ))
     ) : (

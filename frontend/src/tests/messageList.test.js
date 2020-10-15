@@ -1,6 +1,9 @@
 import React from "react";
 import MessageList from "../components/messageList";
 import Enzyme, { mount, shallow } from "enzyme";
+
+import mockMessages from "../__mocks__/messages.json";
+
 import Adapter from "enzyme-adapter-react-16";
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -12,14 +15,16 @@ describe("MessageList", () => {
   });
 
   it("takes messages as props and displays them", () => {
-    const component = shallow(
-      <MessageList
-        messages={[
-          { id: 1, content: "hello", date: "2000" },
-          { id: 2, content: "world", date: "2001" },
-        ]}
-      />
+    const component = shallow(<MessageList messages={mockMessages} />);
+    expect(component.find("ul#message_list").children().length).toBe(
+      mockMessages.length
     );
-    expect(component.find("ul#message_list").children().length).toBe(2);
+  });
+
+  it("has a delete button for each message", () => {
+    const component = mount(<MessageList messages={mockMessages} />);
+    expect(
+      component.find("ul#message_list").childAt(0).exists("button.delete")
+    ).toBe(true);
   });
 });

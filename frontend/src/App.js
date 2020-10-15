@@ -34,11 +34,20 @@ class App extends React.Component {
       .then(({ data }) => this.setMessages(data))
       .catch((err) => this.setError(err));
 
+  deleteMessage = (id) =>
+    axios
+      .delete(`${URL}/delete/${id}`, { id })
+      .then(() => this.getAllMessages())
+      .catch((err) => this.setError(err));
+
   render = () => (
     <div className="App">
       <ErrorHandler error={this.state.error} />
       <MessageForm onSubmit={this.submitMessage} />
-      <MessageList messages={this.state.messages} />
+      <MessageList
+        messages={this.state.messages}
+        onDelete={this.deleteMessage}
+      />
     </div>
   );
 }
