@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 
 import "./App.css";
+import Title from "./components/title";
 import MessageForm from "./components/messageForm";
 import MessageList from "./components/messageList";
 import ErrorHandler from "./components/errorHandler";
@@ -26,28 +27,29 @@ class App extends React.Component {
     axios
       .post(`${URL}/message`, { content })
       .then(this.getAllMessages)
-      .catch((err) => this.setError(err));
+      .catch(this.setError);
 
   getAllMessages = () =>
     axios
       .get(URL)
       .then(({ data }) => this.setMessages(data))
-      .catch((err) => this.setError(err));
+      .catch(this.setError);
 
   deleteMessage = (id) =>
     axios
       .delete(`${URL}/delete/${id}`, { id })
       .then(this.getAllMessages)
-      .catch((err) => this.setError(err));
+      .catch(this.setError);
 
   sendUpdate = (id, content) =>
     axios
       .put(`${URL}/update/${id}`, { content })
       .then(this.getAllMessages)
-      .catch((err) => this.setError(err));
+      .catch(this.setError);
 
   render = () => (
     <div className="App">
+      <Title />
       <ErrorHandler error={this.state.error} />
       <MessageForm onSubmit={this.submitMessage} />
       <MessageList

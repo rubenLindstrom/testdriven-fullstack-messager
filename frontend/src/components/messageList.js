@@ -16,12 +16,9 @@ class MessageList extends React.Component {
       <ul id="message_list">
         {messages ? (
           messages.map((message) => (
-            <Message
-              key={message.id}
-              {...message}
-              onDelete={onDelete}
-              onUpdate={onUpdate}
-            />
+            <li className="message" key={message.id}>
+              <Message {...message} onDelete={onDelete} onUpdate={onUpdate} />
+            </li>
           ))
         ) : (
           <p>No messages</p>

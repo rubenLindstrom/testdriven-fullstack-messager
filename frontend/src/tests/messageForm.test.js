@@ -14,7 +14,7 @@ describe("MessageForm", () => {
 
   it("has textbox", () => {
     const component = mount(<MessageForm />);
-    expect(component.exists("textarea#message_box")).toBe(true);
+    expect(component.exists("#message_box")).toBe(true);
   });
 
   it("has submit button", () => {
@@ -22,10 +22,11 @@ describe("MessageForm", () => {
     expect(component.exists("button#submit")).toBe(true);
   });
 
-  it("should update state message when tesxt entered", () => {
-    const component = shallow(<MessageForm />);
+  it("should update state message when text entered", () => {
+    const component = mount(<MessageForm />);
     component
-      .find("textarea#message_box")
+      .find("#message_box")
+      .hostNodes()
       .simulate("change", { target: { value: "Hello" } });
     expect(component.state("currentMessage")).toEqual("Hello");
   });
@@ -33,12 +34,15 @@ describe("MessageForm", () => {
   it("clears message box on submit", () => {
     const component = mount(<MessageForm onSubmit={(item) => true} />);
     component
-      .find("textarea#message_box")
+      .find("#message_box")
+      .hostNodes()
       .simulate("change", { target: { value: "Hello" } });
     expect(component.state("currentMessage")).toEqual("Hello");
     component.find("form").simulate("submit");
 
-    expect(component.find("textarea#message_box").props().value).toEqual("");
+    expect(component.find("#message_box").hostNodes().props().value).toEqual(
+      ""
+    );
     expect(component.state("currentMessage")).toEqual("");
   });
 });

@@ -1,6 +1,12 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
-class Message extends React.Component {
+import Card from "@material-ui/core/Card";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { TextField } from "@material-ui/core";
+
+class MessageContainer extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -28,30 +34,77 @@ class Message extends React.Component {
         };
 
   render() {
-    const { id, content, date, onDelete } = this.props;
-    const buttonProps = this.getButtonProps();
     return (
-      <li className="message" key={id}>
-        {content}
-        <br />
-        {new Date(date).toLocaleTimeString("en-UK")}
-        <br />
-        <button className="delete" onClick={() => onDelete(id)}>
-          delete
-        </button>
-        <button className={buttonProps.className} onClick={buttonProps.onClick}>
-          {buttonProps.innerText}
-        </button>
-        {this.state.editMode && (
-          <textarea
-            value={this.state.editModeContent}
-            onChange={(e) => this.setState({ editModeContent: e.target.value })}
-            className="updateBox"
-          ></textarea>
-        )}
-      </li>
+      <Message
+        {...this.props}
+        {...this.state}
+        buttonProps={this.getButtonProps()}
+        onDelete={() => this.props.onDelete(this.props.id)}
+        date={new Date(this.props.date).toLocaleTimeString("en-UK")}
+        onEditModeContentChange={(e) =>
+          this.setState({ editModeContent: e.target.value })
+        }
+      />
     );
   }
 }
 
-export default Message;
+const useStyles = makeStyles({
+  card: {
+    maxWidth: 300,
+    padding: 12,
+    margin: "auto",
+    marginBottom: 12,
+    backgroundColor: "#f1f1f1",
+    border: "1px solid lightgrey",
+  },
+  button: {
+    margin: "6px 4px 0 4px",
+  },
+});
+
+const Message = ({
+  content,
+  date,
+  onDelete,
+  editMode,
+  editModeContent,
+  onEditModeContentChange,
+  buttonProps,
+}) => {
+  const classes = useStyles();
+  return (
+    <Card className={classes.card}>
+      {editMode ? (
+        <TextField
+          value={editModeContent}
+          onChange={onEditModeContentChange}
+          inputProps={{ style: { textAlign: "center" } }}
+          className="updateBox"
+        />
+      ) : (
+        <Typography>{content}</Typography>
+      )}
+      <Typography color="textSecondary" gutterBottom>
+        {date}
+      </Typography>
+      <Button
+        color="primary"
+        variant="contained"
+        className={`${buttonProps.className} ${classes.button}`}
+        onClick={buttonProps.onClick}
+      >
+        {buttonProps.innerText}
+      </Button>
+      <Button
+        color="secondary"
+        className={`delete ${classes.button}`}
+        onClick={onDelete}
+      >
+        delete
+      </Button>
+    </Card>
+  );
+};
+
+export default MessageContainer;

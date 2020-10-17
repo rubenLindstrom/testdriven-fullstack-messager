@@ -32,7 +32,7 @@ describe("MessageApp", () => {
 
   it("has textbox", () => {
     const component = mount(<MessageApp />);
-    expect(component.exists("textarea#message_box")).toBe(true);
+    expect(component.exists("#message_box")).toBe(true);
   });
 
   it("has submit button", () => {
@@ -47,10 +47,13 @@ describe("MessageApp", () => {
 
   it("posts data and clears message box on submit success", () => {
     const component = mount(<MessageApp />);
-    const childComponent = component.find("MessageForm");
-    component.find("textarea#message_box").simulate("change", {
-      target: { value: "Hello" },
-    });
+    const childComponent = component.find("MessageFormContainer");
+    component
+      .find("#message_box")
+      .hostNodes()
+      .simulate("change", {
+        target: { value: "Hello" },
+      });
     component.find("form").simulate("submit");
 
     expect(mockAxios.post).toHaveBeenCalledWith(
@@ -72,6 +75,7 @@ describe("MessageApp", () => {
       .find("ul#message_list")
       .childAt(0)
       .find(".delete")
+      .at(0)
       .simulate("click");
     await component.update();
 
@@ -87,23 +91,25 @@ describe("MessageApp", () => {
       .find("ul#message_list")
       .childAt(0)
       .find(".update")
+      .at(0)
       .simulate("click");
 
     expect(
-      component.find("ul#message_list").childAt(0).find(".send").text()
+      component.find("ul#message_list").childAt(0).find(".send").at(0).text()
     ).toBe("Send Update");
 
     component
       .find("ul#message_list")
       .childAt(0)
       .find(".send")
+      .at(0)
       .simulate("click");
 
     expect(mockAxios.put).toHaveBeenCalledWith(
       "http://localhost:3001/update/1",
       { content: "Hello" }
     );
-    expect(component.find("textarea").text()).toEqual("");
+    expect(component.find("#message_box").hostNodes().text()).toEqual("");
   });
 });
 
@@ -132,7 +138,8 @@ describe("MessageApp erroring", () => {
   it("loads err on POST err", async () => {
     const component = mount(<MessageApp />);
     component
-      .find("textarea#message_box")
+      .find("#message_box")
+      .hostNodes()
       .simulate("change", { target: { value: "bad string" } });
     await component.find("form").simulate("submit");
     await component.update();
@@ -154,6 +161,7 @@ describe("MessageApp erroring", () => {
       .find("ul#message_list")
       .childAt(0)
       .find(".delete")
+      .at(0)
       .simulate("click");
     await component.update();
     expect(component.state("error")).toEqual({
@@ -175,16 +183,18 @@ describe("MessageApp erroring", () => {
       .find("ul#message_list")
       .childAt(0)
       .find(".update")
+      .at(0)
       .simulate("click");
 
     expect(
-      component.find("ul#message_list").childAt(0).find(".send").text()
+      component.find("ul#message_list").childAt(0).find(".send").at(0).text()
     ).toBe("Send Update");
 
     component
       .find("ul#message_list")
       .childAt(0)
       .find(".send")
+      .at(0)
       .simulate("click");
 
     expect(component.state("error")).toEqual({

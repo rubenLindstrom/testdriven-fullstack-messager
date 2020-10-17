@@ -1,6 +1,6 @@
 import React from "react";
 import Message from "../components/message";
-import Enzyme, { mount, shallow } from "enzyme";
+import Enzyme, { mount } from "enzyme";
 
 import mockMessages from "../__mocks__/messages.json";
 
@@ -25,10 +25,10 @@ describe("Message", () => {
   });
 
   it("enters edit mode on update click", () => {
-    const component = mount(<Message {...mockMessages[0]} loaded={true} />);
-    component.find(".update").simulate("click");
+    const component = mount(<Message {...mockMessages[0]} />);
+    component.find("button.update").simulate("click");
 
     expect(component.find(".updateBox").text()).toBe("Hello");
-    expect(component.find(".send").text()).toBe("Send Update");
+    expect(component.find("button.send").text()).toBe("Send Update");
   });
 });
